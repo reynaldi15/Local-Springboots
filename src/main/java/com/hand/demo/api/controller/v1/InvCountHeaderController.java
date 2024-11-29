@@ -1,7 +1,6 @@
 package com.hand.demo.api.controller.v1;
 
-import com.hand.demo.api.dto.InvCountHeaderDTO;
-import com.hand.demo.api.dto.WorkFlowEventRequestDTO;
+import com.hand.demo.api.dto.InvCountRequest;
 import io.choerodon.core.domain.Page;
 import io.choerodon.core.iam.ResourceLevel;
 import io.choerodon.mybatis.pagehelper.annotation.SortDefault;
@@ -9,7 +8,6 @@ import io.choerodon.mybatis.pagehelper.domain.PageRequest;
 import io.choerodon.mybatis.pagehelper.domain.Sort;
 import io.choerodon.swagger.annotation.Permission;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import org.hzero.core.base.BaseController;
 import org.hzero.core.util.Results;
 import org.hzero.mybatis.helper.SecurityTokenHelper;
@@ -24,13 +22,8 @@ import springfox.documentation.annotations.ApiIgnore;
 import java.util.List;
 
 /**
- * Inventory Count Header Table(InvCountHeader)表控制层
- *
- * @author
- * @since 2024-11-29 08:49:40
  */
 
-@Slf4j
 @RestController("invCountHeaderController.v1")
 @RequestMapping("/v1/{organizationId}/inv-count-headers")
 public class InvCountHeaderController extends BaseController {
@@ -44,9 +37,8 @@ public class InvCountHeaderController extends BaseController {
     @ApiOperation(value = "Inventory Count Header Table列表")
     @Permission(level = ResourceLevel.ORGANIZATION)
     @GetMapping
-    public ResponseEntity<Page<InvCountHeader>> list(InvCountHeader invCountHeader, @PathVariable Long organizationId,
-                                                     @ApiIgnore @SortDefault(value = InvCountHeader.FIELD_COUNT_HEADER_ID,
-                                                             direction = Sort.Direction.DESC) PageRequest pageRequest) {
+    public ResponseEntity<Page<InvCountHeader>> list(InvCountHeader invCountHeader, @PathVariable Long organizationId, @ApiIgnore @SortDefault(value = InvCountHeader.FIELD_COUNT_HEADER_ID,
+            direction = Sort.Direction.DESC) PageRequest pageRequest) {
         Page<InvCountHeader> list = invCountHeaderService.selectList(pageRequest, invCountHeader);
         return Results.success(list);
     }
@@ -54,7 +46,7 @@ public class InvCountHeaderController extends BaseController {
     @ApiOperation(value = "Inventory Count Header Table明细")
     @Permission(level = ResourceLevel.ORGANIZATION)
     @GetMapping("/{countHeaderId}/detail")
-    public ResponseEntity<InvCountHeader> detail(@PathVariable Long countHeaderId) {
+    public ResponseEntity<InvCountHeader> detail(@PathVariable Long countHeaderId, @PathVariable String organizationId) {
         InvCountHeader invCountHeader = invCountHeaderRepository.selectByPrimary(countHeaderId);
         return Results.success(invCountHeader);
     }
@@ -73,30 +65,24 @@ public class InvCountHeaderController extends BaseController {
     @ApiOperation(value = "删除Inventory Count Header Table")
     @Permission(level = ResourceLevel.ORGANIZATION)
     @DeleteMapping
-    public ResponseEntity<?> remove(@RequestBody List<InvCountHeader> invCountHeaders) {
+    public ResponseEntity<?> remove(@RequestBody List<InvCountHeader> invCountHeaders, @PathVariable String organizationId) {
         SecurityTokenHelper.validToken(invCountHeaders);
         invCountHeaderRepository.batchDeleteByPrimaryKey(invCountHeaders);
         return Results.success();
     }
-//    @ApiOperation(value = "Count Call Back")
-//    @Permission(level = ResourceLevel.ORGANIZATION)
-//    @PostMapping("/approval-callback")
-//    public ResponseEntity<InvCountHeaderDTO> approvalCallback(
-//            @PathVariable Long organizationId,
-//            @RequestBody WorkFlowEventRequestDTO workFlowEventRequest){
-//        log.info("apa {}", workFlowEventRequest);
-//        return Results.success(invCountHeaderService.approvalCallBack(organizationId, workFlowEventRequest));
-//    }
-        @ApiOperation(value = "Count Call Back")
-        @Permission(level = ResourceLevel.ORGANIZATION)
-        @PostMapping("/approval-callback")
-        public ResponseEntity<?> callback(
-                @PathVariable Long organizationId,
-                @RequestBody InvCountHeaderDTO invCountHeaders) {
-            validObject(invCountHeaders);
-            InvCountHeader invCountHeader = invCountHeaderService.insertOrUpdate(invCountHeaders, organizationId);
-            return Results.success(invCountHeader);
-        }
 
+
+    @ApiOperation(value = "insert or update inv")
+    @Permission(level = ResourceLevel.ORGANIZATION)
+    @PostMapping(
+            path = "/save"
+    )
+    public ResponseEntity<?> callback(
+            @PathVariable Long organizationId,
+            @RequestBody InvCountRequest invCountHeaders) {
+        validObject(invCountHeaders);
+        InvCountHeader invCountHeader = invCountHeaderService.insertOrUpdate(invCountHeaders, organizationId);
+        return Results.success(invCountHeader);
+    }
 }
 

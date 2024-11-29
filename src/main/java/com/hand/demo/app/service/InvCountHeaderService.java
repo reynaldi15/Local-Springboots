@@ -1,7 +1,6 @@
 package com.hand.demo.app.service;
 
-import com.hand.demo.api.dto.InvCountHeaderDTO;
-import com.hand.demo.api.dto.WorkFlowEventRequestDTO;
+import com.hand.demo.api.dto.InvCountRequest;
 import io.choerodon.core.domain.Page;
 import io.choerodon.mybatis.pagehelper.domain.PageRequest;
 import com.hand.demo.domain.entity.InvCountHeader;
@@ -11,8 +10,8 @@ import java.util.List;
 /**
  * Inventory Count Header Table(InvCountHeader)应用服务
  *
- * @author
- * @since 2024-11-29 08:49:39
+ * @author razah
+ * @since 2024-11-28 10:08:42
  */
 public interface InvCountHeaderService {
 
@@ -32,8 +31,7 @@ public interface InvCountHeaderService {
      */
     void saveData(List<InvCountHeader> invCountHeaders);
 
-//    InvCountHeaderDTO approvalCallBack(Long organizationId, WorkFlowEventRequestDTO workFlowEventRequest);
+    InvCountHeader insertOrUpdate(InvCountRequest invCountRequest, Long tenantId);
 
-    InvCountHeader insertOrUpdate(InvCountHeaderDTO invCountRequest, Long tenantId);
 }
 

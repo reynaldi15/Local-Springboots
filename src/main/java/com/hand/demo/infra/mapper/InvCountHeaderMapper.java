@@ -9,8 +9,8 @@ import java.util.List;
 /**
  * Inventory Count Header Table(InvCountHeader)应用服务
  *
- * @author
- * @since 2024-11-29 08:49:39
+ * @author razah
+ * @since 2024-11-28 10:08:41
  */
 public interface InvCountHeaderMapper extends BaseMapper<InvCountHeader> {
     /**

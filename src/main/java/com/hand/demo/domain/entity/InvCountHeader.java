@@ -20,8 +20,8 @@ import java.util.Date;
 /**
  * Inventory Count Header Table(InvCountHeader)实体类
  *
- * @author razah
- * @since 2024-11-28 10:08:41
+ * @author
+ * @since 2024-11-29 13:36:25
  */
 
 @ApiModel("Inventory Count Header Table")
@@ -30,7 +30,7 @@ import java.util.Date;
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 @Table(name = "todo_inv_count_header")
 public class InvCountHeader extends AuditDomain {
-    private static final long serialVersionUID = 676939104881210117L;
+    private static final long serialVersionUID = 507137961878956902L;
 
     public static final String FIELD_COUNT_HEADER_ID = "countHeaderId";
     public static final String FIELD_APPROVED_TIME = "approvedTime";
@@ -68,52 +68,36 @@ public class InvCountHeader extends AuditDomain {
     @ApiModelProperty(value = "Approved Time")
     private Date approvedTime;
 
-    @ApiModelProperty(value = "")
     private String attribute1;
 
-    @ApiModelProperty(value = "")
     private String attribute10;
 
-    @ApiModelProperty(value = "")
     private String attribute11;
 
-    @ApiModelProperty(value = "")
     private String attribute12;
 
-    @ApiModelProperty(value = "")
     private String attribute13;
 
-    @ApiModelProperty(value = "")
     private String attribute14;
 
-    @ApiModelProperty(value = "")
     private String attribute15;
 
-    @ApiModelProperty(value = "")
     private String attribute2;
 
-    @ApiModelProperty(value = "")
     private String attribute3;
 
-    @ApiModelProperty(value = "")
     private String attribute4;
 
-    @ApiModelProperty(value = "")
     private String attribute5;
 
-    @ApiModelProperty(value = "")
     private String attribute6;
 
-    @ApiModelProperty(value = "")
     private String attribute7;
 
-    @ApiModelProperty(value = "")
     private String attribute8;
 
-    @ApiModelProperty(value = "")
     private String attribute9;
 
-    @ApiModelProperty(value = "")
     private String attributeCategory;
 
     @ApiModelProperty(value = "Count Mode")

@@ -2,18 +2,19 @@ package com.hand.demo.api.dto;
 
 //import com.hand.demo.infra.constant.StatusDoc;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
-public class InvCountHeaderDTO {
+public class InvCountHeaderRequest {
     private String businessKey;
     private String statusDoc;
     private Date approvedTime;
     private Long workFlowId;
 
-    public InvCountHeaderDTO() {
+    public InvCountHeaderRequest() {
     }
 
-    public InvCountHeaderDTO(String businessKey, String statusDoc, Date approvedTime, Long workFlowId) {
+    public InvCountHeaderRequest(String businessKey, String statusDoc, Date approvedTime, Long workFlowId) {
         this.businessKey = businessKey;
         this.statusDoc = statusDoc;
         this.approvedTime = approvedTime;
