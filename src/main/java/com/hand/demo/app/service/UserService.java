@@ -1,5 +1,9 @@
 package com.hand.demo.app.service;
+import com.hand.demo.api.dto.UserRequest;
 import com.hand.demo.domain.entity.User;
+
+import java.util.List;
+
 /**
  * 用户应用服务
  */
@@ -17,4 +21,6 @@ public interface UserService {
      * @param userId 用户ID
      */
     void delete(Long userId);
+
+    List<UserRequest> exportData(UserRequest userRequest);
 }

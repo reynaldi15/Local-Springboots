@@ -1,5 +1,10 @@
 package com.hand.demo.app.service;
+import com.hand.demo.api.dto.TaskRequest;
 import com.hand.demo.domain.entity.Task;
+
+import java.util.Collection;
+import java.util.List;
+
 /**
  * 任务应用服务
  */
@@ -24,4 +29,11 @@ public interface TaskService {
      * @param taskNumber 任务编号
      */
     void deleteByTaskNumber(String taskNumber);
+
+    List<TaskRequest> selectList(TaskRequest task);
+
+    Task save(String description, Long tenantId);
+
+//    Task save(String description, Long tenantId);
+//    <task> Task save(task);
 }

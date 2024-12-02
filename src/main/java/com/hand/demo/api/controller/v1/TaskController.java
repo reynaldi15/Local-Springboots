@@ -78,6 +78,16 @@ public class TaskController extends BaseController {
     public void delete(@PathVariable Long organizationId, @PathVariable @ApiParam(value = "任务编号") String taskNumber) {
         taskService.deleteByTaskNumber(taskNumber);
     }
+//    @Permission(level = ResourceLevel.ORGANIZATION)
+//    @ApiOperation(value = "generatetask")
+//    @PostMapping
+//    public Task save(
+//            @PathVariable Long organizationId,
+//            @RequestParam String description,
+//            @RequestParam Long tenantId) {
+//        return taskService.save(description, tenantId);
+//    }
+
 
 
 }

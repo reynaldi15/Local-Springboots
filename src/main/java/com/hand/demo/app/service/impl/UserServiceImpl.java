@@ -1,4 +1,7 @@
 package com.hand.demo.app.service.impl;
+import com.hand.demo.api.dto.TaskRequest;
+import com.hand.demo.api.dto.UserRequest;
+import com.hand.demo.app.service.TaskService;
 import com.hand.demo.app.service.UserService;
 import com.hand.demo.domain.entity.Task;
 import com.hand.demo.domain.entity.User;
@@ -8,7 +11,12 @@ import io.choerodon.core.exception.CommonException;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 /**
  * 用户应用服务实现
  */
@@ -16,9 +24,11 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
-    public UserServiceImpl(TaskRepository taskRepository, UserRepository userRepository) {
+    private final TaskService taskService;
+    public UserServiceImpl(TaskRepository taskRepository, UserRepository userRepository, TaskService taskService) {
         this.taskRepository = taskRepository;
         this.userRepository = userRepository;
+        this.taskService = taskService;
     }
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -41,4 +51,17 @@ public class UserServiceImpl implements UserService {
             taskRepository.batchDelete(tasks);
         }
     }
+
+    @Override
+    public List<UserRequest> exportData(UserRequest userRequest){
+        List<UserRequest> userList = userRepository.selectList(userRequest);
+        List<Long> userIdList = new ArrayList<>();
+        userList.forEach(user -> userIdList.add(user.getId()));
+        Map<Long,List<TaskRequest>> taskMap= taskService.selectList(new TaskRequest().setEmpIdList(userIdList))
+                .stream()
+                .collect(Collectors.groupingBy(TaskRequest::getEmployeeId));
+        userList.forEach(user -> user.setTaskList(taskMap.get(user.getId())));
+        return userList;
+    }
+
 }

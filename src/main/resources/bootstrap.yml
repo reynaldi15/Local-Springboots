@@ -6,7 +6,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: '*'
+        include: async-export-endpoint #or '*'
 spring:
   profiles:
     active: default
